@@ -154,20 +154,20 @@ struct fb_fix_screen_info {
         char id[16];                        /* identification string eg "TT Builtin" */
         unsigned long smem_start;        /* Start of frame buffer mem */
                                         /* (physical address) */
-        __u32 smem_len;                        /* Length of frame buffer mem */
-        __u32 type;                        /* see FB_TYPE_*                */
-        __u32 tupl_aux;                        /* Interleave for interleaved Planes */
-        __u32 visual;                        /* see FB_VISUAL_*                */ 
-        __u16 xpanstep;                        /* zero if no hardware panning  */
-        __u16 ypanstep;                        /* zero if no hardware panning  */
-        __u16 ywrapstep;                /* zero if no hardware ywrap    */
-        __u32 line_length;                /* length of a line in bytes    */
+        long smem_len;                        /* Length of frame buffer mem */
+        int type;                        /* see FB_TYPE_*                */
+        int tupl_aux;                        /* Interleave for interleaved Planes */
+        long visual;                        /* see FB_VISUAL_*                */ 
+        int xpanstep;                        /* zero if no hardware panning  */
+        int ypanstep;                        /* zero if no hardware panning  */
+        int ywrapstep;                /* zero if no hardware ywrap    */
+        int line_length;                /* length of a line in bytes    */
         unsigned long mmio_start;        /* Start of Memory Mapped I/O   */
                                         /* (physical address) */
-        __u32 mmio_len;                        /* Length of Memory Mapped I/O  */
-        __u32 accel;                        /* Indicate to driver which        */
+        long mmio_len;                        /* Length of Memory Mapped I/O  */
+        long accel;                        /* Indicate to driver which        */
                                         /*  specific chip/card we have        */
-        __u16 reserved[3];                /* Reserved for future compatibility */
+        int reserved[3];                /* Reserved for future compatibility */
 };
 
 /* Interpretation of offset for color fields: All offsets are from the right,
@@ -181,9 +181,9 @@ struct fb_fix_screen_info {
  * of available palette entries (i.e. # of entries = 1 << length).
  */
 struct fb_bitfield {
-        __u32 offset;                        /* beginning of bitfield        */
-        __u32 length;                        /* length of bitfield                */
-        __u32 msb_shift;                /* != 0 : Most significant bit is */ 
+        long offset;                        /* beginning of bitfield        */
+        long length;                        /* length of bitfield                */
+        long msb_shift;                /* != 0 : Most significant bit is */ 
                                         /* right */ 
 };
 
@@ -234,56 +234,56 @@ struct fb_bitfield {
 #define KHZ2PICOS(a) (1000000000UL/(a))
 
 struct fb_var_screeninfo {
-        __u32 xres;                        /* visible resolution                */
-        __u32 yres;
-        __u32 xres_virtual;                /* virtual resolution                */
-        __u32 yres_virtual;
-        __u32 xoffset;                        /* offset from virtual to visible */
-        __u32 yoffset;                        /* resolution                        */
+        long xres;                        /* visible resolution                */
+        long yres;
+        long xres_virtual;                /* virtual resolution                */
+        long yres_virtual;
+        long xoffset;                        /* offset from virtual to visible */
+        long yoffset;                        /* resolution                        */
 
-        __u32 bits_per_pixel;                /* guess what                        */
-        __u32 grayscale;                /* != 0 Graylevels instead of colors */
+        long bits_per_pixel;                /* guess what                        */
+        long grayscale;                /* != 0 Graylevels instead of colors */
 
         struct fb_bitfield red;                /* bitfield in fb mem if true color, */
         struct fb_bitfield green;        /* else only length is significant */
         struct fb_bitfield blue;
         struct fb_bitfield transp;        /* transparency                        */        
 
-        __u32 nonstd;                        /* != 0 Non standard pixel format */
+        long nonstd;                        /* != 0 Non standard pixel format */
 
-        __u32 activate;                        /* see FB_ACTIVATE_*                */
+        long activate;                        /* see FB_ACTIVATE_*                */
 
-        __u32 height;                        /* height of picture in mm    */
-        __u32 width;                        /* width of picture in mm     */
+        long height;                        /* height of picture in mm    */
+        long width;                        /* width of picture in mm     */
 
-        __u32 accel_flags;                /* (OBSOLETE) see fb_info.flags */
+        long accel_flags;                /* (OBSOLETE) see fb_info.flags */
 
         /* Timing: All values in pixclocks, except pixclock (of course) */
-        __u32 pixclock;                        /* pixel clock in ps (pico seconds) */
-        __u32 left_margin;                /* time from sync to picture        */
-        __u32 right_margin;                /* time from picture to sync        */
-        __u32 upper_margin;                /* time from sync to picture        */
-        __u32 lower_margin;
-        __u32 hsync_len;                /* length of horizontal sync        */
-        __u32 vsync_len;                /* length of vertical sync        */
-        __u32 sync;                        /* see FB_SYNC_*                */
-        __u32 vmode;                        /* see FB_VMODE_*                */
-        __u32 rotate;                        /* angle we rotate counter clockwise */
-        __u32 reserved[5];                /* Reserved for future compatibility */
+        long pixclock;                        /* pixel clock in ps (pico seconds) */
+        long left_margin;                /* time from sync to picture        */
+        long right_margin;                /* time from picture to sync        */
+        long upper_margin;                /* time from sync to picture        */
+        long lower_margin;
+        long hsync_len;                /* length of horizontal sync        */
+        long vsync_len;                /* length of vertical sync        */
+        int sync;                        /* see FB_SYNC_*                */
+        long vmode;                        /* see FB_VMODE_*                */
+        long rotate;                        /* angle we rotate counter clockwise */
+        int reserved[5];                /* Reserved for future compatibility */
 };
 
 struct fb_cmap {
-        __u32 start;                        /* First entry        */
-        __u32 length;                        /* Number of entries */
-        __u16 *red;                        /* Red values        */
-        __u16 *green;
-        __u16 *blue;
-        __u16 *transp;                        /* transparency, can be NULL */
+        long start;                        /* First entry        */
+        long length;                        /* Number of entries */
+        int *red;                        /* Red values        */
+        int *green;
+        int *blue;
+        int *transp;                        /* transparency, can be NULL */
 };
 
 struct fb_con2fbmap {
-        __u32 console;
-        __u32 framebuffer;
+        int console;
+        long framebuffer;
 };
 
 /* VESA Blanking Levels */
@@ -321,11 +321,11 @@ enum {
 #define FB_VBLANK_HAVE_VSYNC        0x100        /* verical syncs can be detected */
 
 struct fb_vblank {
-        __u32 flags;                        /* FB_VBLANK flags */
-        __u32 count;                        /* counter of retraces since boot */
-        __u32 vcount;                        /* current scanline position */
-        __u32 hcount;                        /* current scandot position */
-        __u32 reserved[4];                /* reserved for future compatibility */
+        long flags;                        /* FB_VBLANK flags */
+        long count;                        /* counter of retraces since boot */
+        long vcount;                        /* current scanline position */
+        long hcount;                        /* current scandot position */
+        int reserved[4];                /* reserved for future compatibility */
 };
 
 /* Internal HW accel */
@@ -333,31 +333,31 @@ struct fb_vblank {
 #define ROP_XOR  1
 
 struct fb_copyarea {
-        __u32 dx;
-        __u32 dy;
-        __u32 width;
-        __u32 height;
-        __u32 sx;
-        __u32 sy;
+        long dx;
+        long dy;
+        long width;
+        long height;
+        long sx;
+        long sy;
 };
 
 struct fb_fillclip {
-        __u32 dx;        /* screen-relative */
-        __u32 dy;
-        __u32 width;
-        __u32 height;
-        __u32 color;
-        __u32 rop;
+        long dx;        /* screen-relative */
+        long dy;
+        long width;
+        long height;
+        long color;
+        long rop;
 };
 
 struct fb_image {
-        __u32 dx;                /* Where to place image */
-        __u32 dy;
-        __u32 width;                /* Size of image */
-        __u32 height;
-        __u32 fg_color;                /* Only used when a mono bitmap */
-        __u32 bg_color;
-        __u8  depth;                /* Depth of the image */
+        long dx;                /* Where to place image */
+        long dy;
+        long width;                /* Size of image */
+        long height;
+        long fg_color;                /* Only used when a mono bitmap */
+        lont bg_color;
+        int  depth;                /* Depth of the image */
         const char *data;        /* Pointer to image data */
         struct fb_cmap cmap;        /* color map info */
 };
@@ -375,13 +375,13 @@ struct fb_image {
 #define FB_CUR_SETALL    0xF
 
 struct fb_curpos {
-        __u16 x, y;  //ram linear buf
+        int x, y;  //ram linear buf
 };
 
 struct fb_cursor {
-        __u16 set;                      /* what to set */
-        __u16 enable;                   /* cursor on/off */
-        __u16 rop;                      /* bitop operation */
+        int set;                      /* what to set */
+        int enable;                   /* cursor on/off */
+        int rop;                      /* bitop operation */
         const char *bits;               /* cursor mask bits */
         struct fb_curpos __down;        /* cursor hot spot */
         struct fb_image __dock;         /* Cursor image */
